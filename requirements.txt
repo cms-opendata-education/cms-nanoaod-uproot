@@ -1,4 +1,5 @@
 xrootd
+fsspec-xrootd
 uproot==5.7.4
 awkward==2.9.0
 numpy==2.2.6
