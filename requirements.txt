@@ -3,3 +3,4 @@ matplotlib==3.10.9
 numpy==2.2.6
 uproot==5.7.4
 fsspec_xrootd==0.5.4
+xrootd

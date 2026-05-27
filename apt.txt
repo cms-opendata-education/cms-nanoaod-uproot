@@ -1,3 +1,1 @@
 xrootd-client
-xrootd-server
-python3-xrootd
