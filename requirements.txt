@@ -1,3 +1,4 @@
+jupyter-server-proxy
 xrootd
 fsspec-xrootd
 uproot==5.7.4

@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+# Ensure jupyter-server-proxy is installed
+pip install jupyter-server-proxy
+
+# Create a minimal xrootd configuration file in the home directory
+# This allows anonymous access and exports the home directory
+cat > $HOME/xrootd.cfg << EOF
+all.export /
+all.auth require none
+xrootd.port 1094
+EOF
+
+# Create the Jupyter server configuration to proxy port 1094
+# This file is read when the Jupyter server starts
+mkdir -p $HOME/.jupyter
+cat > $HOME/.jupyter/jupyter_server_config.py << EOF
+c.ServerProxy.servers = {
+    'xrootd': {
+        # Command to start xrootd: 
+        # 'xrootd' (binary), '$HOME' (working dir), '-f' (config flag), '$HOME/xrootd.cfg' (config path)
+        'command': ['xrootd', '$HOME', '-f', '$HOME/xrootd.cfg'],
+        'port': 1094,
+        'timeout': 30,
+        'absolute_url': True,
+        'launcher_entry': {
+            'enabled': True,
+            'title': 'XRootD Server',
+            'icon_path': '/static/favicons/favicon.ico' 
+        },
+    },
+}
+EOF
+
+echo "XRootD proxy configuration complete."
